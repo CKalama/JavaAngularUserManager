@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService{
 
 	
 	//This is the serviceImpl method that will find all Users. It was instantiated on the UserService interface.
-	
 	@Override
 	public List<User> findAll() {
 		// TODO Auto-generated method stub
