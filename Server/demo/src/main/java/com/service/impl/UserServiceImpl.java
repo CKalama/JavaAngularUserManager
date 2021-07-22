@@ -15,13 +15,36 @@ import com.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
+	
+	//An empty List of Users currently. Needs to be static because it will then be populated on initialiazation. 
+	public static List<User> usersList = new ArrayList<>();
+	
+	//We want to control the id to increment on each user.
+	//This is an Integer, we can use it on a User in the static variables below because the first requirement is an id that is an Integer
+	private static Integer COUNTER = 1;
+	
+	static {
+		User user = new User(COUNTER++, "Chris", "Kalama", 25, "USA");
+		usersList.add(user);
+		
+		user = new User(COUNTER++, "Sally", "Margie", 39, "Brazil");
+		usersList.add(user);
+		
+		user = new User(COUNTER++, "Jax", "Teller", 29, "USA");
+		usersList.add(user);
+		
+		user = new User(COUNTER++, "Becky", "Fuller", 22, "Canada");
+		usersList.add(user);
+		
+		user = new User(COUNTER++, "Kelly", "Rhodes", 30, "Russia");
+		usersList.add(user);
+	}
 
 	
 	//This is the serviceImpl method that will find all Users. It was instantiated on the UserService interface.
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		List<User> usersList = new ArrayList<>();
+	
 		return usersList;
 	}
 	
