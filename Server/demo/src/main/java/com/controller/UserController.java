@@ -1,9 +1,11 @@
 package com.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,11 +26,28 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	//We also need to tell Spring which request to do on each method so that it knows
+	//We also need to tell Spring which request to do on each method so that it knows how to Map.
 	
 	@GetMapping
 	public List<User> findAll() {
 		return userService.findAll();
 	}
-
+	
+	//This one will have the Optional class within the method. This is a GetMapping annotation as another get to grab data
+	//Notice this GetMapping has the id as the next / in the path. You can isolate by ids now with that 
+	//This also needs the annotation @PathVariable, this will allow Spring to know which variable to grab 
+	@GetMapping("/{id}")
+	public User findById(@PathVariable Long id) {
+		Optional<User> userOption = userService.findById(id);
+	
+			if (userOption.isPresent()) {
+				return userOption.get();
+			}
+		
+		return null;
+	}
+	
+	
+	
+	
 }

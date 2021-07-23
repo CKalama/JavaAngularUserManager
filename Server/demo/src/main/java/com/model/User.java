@@ -9,7 +9,7 @@ package com.model;
 
 public class User {
 	
-	private Integer id; 
+	private Long id; 
 	private String firstName;
 	private String lastName;
 	private Integer age;
@@ -21,7 +21,7 @@ public class User {
 	}
 	
 
-	public User(Integer id, String firstName, String lastName, Integer age, String country) {
+	public User(Long id, String firstName, String lastName, Integer age, String country) {
 		super();
 		this.id = id; 
 		this.firstName = firstName;
@@ -31,12 +31,12 @@ public class User {
 	}
 
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

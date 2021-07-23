@@ -2,6 +2,7 @@ package com.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService{
 	public static List<User> usersList = new ArrayList<>();
 	
 	//We want to control the id to increment on each user.
-	//This is an Integer, we can use it on a User in the static variables below because the first requirement is an id that is an Integer
-	private static Integer COUNTER = 1;
+	//This is an Long, we can use it on a User in the static variables below because the first requirement is an id that is an Long
+	private static Long COUNTER = 1l;
 	
 	static {
 		User user = new User(COUNTER++, "Chris", "Kalama", 25, "USA");
@@ -44,8 +45,17 @@ public class UserServiceImpl implements UserService{
 	//This is the serviceImpl method that will find all Users. It was instantiated on the UserService interface.
 	@Override
 	public List<User> findAll() {
-	
 		return usersList;
+	}
+	
+	//serviceImpl method that will be Users by Id. It was instantiated on the UserService interface.
+	@Override
+	public Optional<User> findById(Long id) {
+			Optional<User> userOption = usersList.stream().filter(user -> user.getId() == id).findFirst();
+			
+				return userOption;
+			//You can re-factor this further and just put the return before the Optional...
+		
 	}
 	
 
