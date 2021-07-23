@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +72,23 @@ public class UserController {
 		
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
+	
+	
+	//PutMapping is used for Updating 
+	@PutMapping("/update")
+	public ResponseEntity<?> updateUser(@RequestBody User user){
+		Optional<User> userOption = userService.updateUser(user);
+		
+		if(userOption.isPresent()) {
+			return new ResponseEntity<User>(userOption.get(), HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+	}
+	
+	
+	
+	
 	
 	//DeleteMapping will be needed to get rid of a Model
 	@DeleteMapping("/delete/{id}")

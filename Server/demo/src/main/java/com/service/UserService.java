@@ -18,8 +18,13 @@ public interface UserService {
 	//Note that the parameter being passed is User. 
 	public void addUser(User user);
 	
+	//Updating the API, we will need
+	public Optional<User> updateUser(User user);
+	
 	//we will return an Optional User for our Delete Method
 	public Optional<User> deleteUser(Long id);
+	
+	
 	
 	
 }

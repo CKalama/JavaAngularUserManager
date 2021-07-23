@@ -1,6 +1,7 @@
 package com.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,13 +47,14 @@ public class UserServiceImpl implements UserService{
 	//This is the serviceImpl method that will find all Users. It was instantiated on the UserService interface.
 	@Override
 	public List<User> findAll() {
-		return usersList;
+		return usersList.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toList());
 	}
 	
 	//serviceImpl method that will be Users by Id. It was instantiated on the UserService interface.
 	@Override
 	public Optional<User> findById(Long id) {
-			Optional<User> userOption = usersList.stream().filter(user -> user.getId() == id).findFirst();
+			Optional<User> userOption = usersList.stream().filter(user -> 
+							user.getId() == id).findFirst();
 			
 				return userOption;
 			//You can re-factor this further and just put the return before the Optional...
@@ -68,12 +70,51 @@ public class UserServiceImpl implements UserService{
 		usersList.add(user);
 		
 	}
-
+	
+	//serviceImpl to Update Users
+	@Override
+	public Optional<User> updateUser(User user){
+		//This method as used in delete will check if the id we want to update is contained in the model.
+		//In this one however, u is the parameter being passed in the stream and then user is coming from parameter above that grabs the id from the Model
+		Optional<User> userOption = usersList.stream().filter(u ->
+					u.getId() == user.getId()).findFirst();
+		
+		if(userOption.isPresent()) {
+			//This will make sure we grab the existing user
+			User existingUser = userOption.get();
+			
+			//We need to check what is updated in the model
+			if(user.getFirstName() != null) {
+				existingUser.setFirstName(user.getFirstName());
+			}
+			if(user.getLastName() != null) {
+				existingUser.setLastName(user.getLastName());
+			}
+			if(user.getAge() != null) {
+				existingUser.setAge(user.getAge());
+			}
+			if(user.getCountry() != null) {
+				existingUser.setCountry(user.getCountry());
+			}
+			
+			usersList = usersList.stream().filter(u -> 
+					u.getId() != existingUser.getId()).collect(Collectors.toList());
+			
+			usersList.add(existingUser);
+			
+			return Optional.of(existingUser);
+		}
+		return Optional.empty();
+			
+	}
+	
+	
 	//serviceImpl to deleteUsers
 	@Override
 	public Optional<User> deleteUser(Long id){
 		//Need to verify first if User is in the ArrayList by checking its ID. The Stream and filter are looking for the user Id
-		Optional<User> userOption = usersList.stream().filter(user -> user.getId() == id).findFirst();
+		Optional<User> userOption = usersList.stream().filter(user -> 
+								user.getId() == id).findFirst();
 		
 		if(userOption.isPresent()) {
 			//We are going to need another stream process and filter out the Ids. This will collect the statements as a List.
@@ -88,4 +129,5 @@ public class UserServiceImpl implements UserService{
 		//Optionals can be empty like this with this Java method. 
 		return Optional.empty();
 	}
+	
 }
