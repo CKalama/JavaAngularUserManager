@@ -3,6 +3,8 @@ package com.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +50,7 @@ public class UserController {
 	//Remember this in class, We used the REsponseEntity to get HTTP status codes. Will throw us 200 and 404 errors now. 
 	//It is also a ? in the method call because that way we can use <User> and <Void> inside the method
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findById(@PathVariable Long id) {
+	public ResponseEntity<?> findById(@Valid @PathVariable Long id) {
 		Optional<User> userOption = userService.findById(id);
 	
 			if (userOption.isPresent()) {

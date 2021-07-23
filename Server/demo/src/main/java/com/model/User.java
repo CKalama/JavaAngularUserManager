@@ -1,5 +1,7 @@
 package com.model;
 
+import javax.validation.constraints.NotNull;
+
 //This is the model class, here is built a simple User who will get your instance variables, generic Constructor
 // and getters/setters.
 
@@ -7,12 +9,19 @@ package com.model;
 //Auto-Source hashcode() and equals() methods
 //Auto-Source your toString() method.
 
+//With this import, we will be able to add Validation to our Model and so the API knows to accept certain instance variables
+//import javax.validation.constraints.NotNull;
+
 public class User {
 	
 	private Long id; 
+	@NotNull
 	private String firstName;
+	@NotNull
 	private String lastName;
+	@NotNull
 	private Integer age;
+	@NotNull
 	private String country; 
 	
 	//Generic Constructor 
