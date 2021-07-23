@@ -15,7 +15,7 @@ import com.service.UserService;
 
 
 @RestController
-@RequestMapping("/api/users/")
+@RequestMapping("/api/users") //Removed the / at end of users/. It is important for separate mapping. 
 public class UserController {
 	
 	//We need to inject the UserServiceImpl under the Controller Class using @Autowired
