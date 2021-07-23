@@ -3,6 +3,7 @@ package com.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -68,4 +69,23 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	//serviceImpl to deleteUsers
+	@Override
+	public Optional<User> deleteUser(Long id){
+		//Need to verify first if User is in the ArrayList by checking its ID. The Stream and filter are looking for the user Id
+		Optional<User> userOption = usersList.stream().filter(user -> user.getId() == id).findFirst();
+		
+		if(userOption.isPresent()) {
+			//We are going to need another stream process and filter out the Ids. This will collect the statements as a List.
+			//With this, we are using a != to signify find all the users that AREN'T Being given the Id asked for. 
+			usersList = usersList.stream().filter(user -> 
+						userOption.get().getId() != user.getId()).collect(Collectors.toList());
+			
+			
+			return userOption;
+		}
+		
+		//Optionals can be empty like this with this Java method. 
+		return Optional.empty();
+	}
 }
