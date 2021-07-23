@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,6 +59,15 @@ public class UserController {
 	}
 	
 	
+	//PostMapping is needed when we create something new for the API to grab. 
+	//We will need RequestBody, This helps Spring be able to interpret the User Model
+	//Need @Valid Annotation, this will allow spring to verify the User on the request. This works when we have instance variables on our model that are NOT NULL. 
+	@PostMapping("/add")
+	public ResponseEntity<?> addUser(@RequestBody User user){
+		userService.addUser(user);
+		
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
 	
 	
 }

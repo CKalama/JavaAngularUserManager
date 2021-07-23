@@ -58,5 +58,14 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
+	//serviceImpl to addUsers and PostMap, You will need to also take care of the Id
+	@Override
+	public void addUser(User user) {
+		//Need to make sure the ID is incrementing. 
+		user.setId(COUNTER++);
+		//This will add a new User passed through the parameter into the Array List usersList
+		usersList.add(user);
+		
+	}
 
 }

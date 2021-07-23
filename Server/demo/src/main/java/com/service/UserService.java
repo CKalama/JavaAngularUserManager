@@ -15,4 +15,7 @@ public interface UserService {
 	//So if user is not found we don't want error where null might be a problem. 
 	public Optional<User> findById(Long id);
 	
+	//Note that the parameter being passed is User. 
+	public void addUser(User user);
+	
 }
