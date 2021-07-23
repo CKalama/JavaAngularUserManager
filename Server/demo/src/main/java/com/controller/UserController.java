@@ -50,7 +50,7 @@ public class UserController {
 	//Remember this in class, We used the REsponseEntity to get HTTP status codes. Will throw us 200 and 404 errors now. 
 	//It is also a ? in the method call because that way we can use <User> and <Void> inside the method
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findById(@Valid @PathVariable Long id) {
+	public ResponseEntity<?> findById(@PathVariable Long id) {
 		Optional<User> userOption = userService.findById(id);
 	
 			if (userOption.isPresent()) {
@@ -65,7 +65,7 @@ public class UserController {
 	//We will need RequestBody, This helps Spring be able to interpret the User Model
 	//Need @Valid Annotation, this will allow spring to verify the User on the request. This works when we have instance variables on our model that are NOT NULL. 
 	@PostMapping("/add")
-	public ResponseEntity<?> addUser(@RequestBody User user){
+	public ResponseEntity<?> addUser(@Valid @RequestBody User user){
 		userService.addUser(user);
 		
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
