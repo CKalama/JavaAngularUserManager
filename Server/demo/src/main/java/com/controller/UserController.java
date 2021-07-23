@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,22 +31,29 @@ public class UserController {
 	//We also need to tell Spring which request to do on each method so that it knows how to Map.
 	
 	@GetMapping
-	public List<User> findAll() {
-		return userService.findAll();
+	public ResponseEntity<?> findAll() {
+		List<User> findAllUsers = userService.findAll();
+		
+		return new ResponseEntity<List<User>>(findAllUsers, HttpStatus.OK);
 	}
 	
 	//This one will have the Optional class within the method. This is a GetMapping annotation as another get to grab data
 	//Notice this GetMapping has the id as the next / in the path. You can isolate by ids now with that 
 	//This also needs the annotation @PathVariable, this will allow Spring to know which variable to grab 
+	
+	//ResponseEntity is a Springboot import
+	//Originally we had a different method but ResponseEntity will allow us greater control over HttpStatuses
+	//Remember this in class, We used the REsponseEntity to get HTTP status codes. Will throw us 200 and 404 errors now. 
+	//It is also a ? in the method call because that way we can use <User> and <Void> inside the method
 	@GetMapping("/{id}")
-	public User findById(@PathVariable Long id) {
+	public ResponseEntity<?> findById(@PathVariable Long id) {
 		Optional<User> userOption = userService.findById(id);
 	
 			if (userOption.isPresent()) {
-				return userOption.get();
+				return new ResponseEntity<User>(userOption.get(), HttpStatus.OK);
 			}
 		
-		return null;
+		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	}
 	
 	
