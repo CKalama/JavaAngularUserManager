@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 //This is the model class, here is built a simple User who will get your instance variables, generic Constructor
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
 //Part 2: Changing this model to an Entity so our database can read it
 
 @Entity
+@Table(name="users")
 public class User {
 	
 	
