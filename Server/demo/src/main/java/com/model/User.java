@@ -1,5 +1,9 @@
 package com.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 //This is the model class, here is built a simple User who will get your instance variables, generic Constructor
@@ -12,8 +16,14 @@ import javax.validation.constraints.NotNull;
 //With this import, we will be able to add Validation to our Model and so the API knows to accept certain instance variables
 //import javax.validation.constraints.NotNull;
 
+//Part 2: Changing this model to an Entity so our database can read it
+
+@Entity
 public class User {
 	
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id; 
 	@NotNull
 	private String firstName;
