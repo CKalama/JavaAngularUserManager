@@ -1,11 +1,14 @@
 package com.service.impl;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
+
 
 //import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import com.service.UserService;
 	//Business logic of the Service class goes under the ServiceImpl class
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
 		
 	//IMPORTANT: We are going to update our methods using the Repository set up and change how our model behaves with DB and JPA
