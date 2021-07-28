@@ -56,16 +56,19 @@ public class UserServiceImpl implements UserService{
 	public List<User> findAll() {
 		//Repository JPA has a findAll() method. However, we cannot convert
 		return userRepository.findAll();
-//		return usersList.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toList());
+//				return usersList.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toList());
 	}
 	
 	//serviceImpl method that will be Users by Id. It was instantiated on the UserService interface.
 	@Override
 	public Optional<User> findById(Long id) {
-			Optional<User> userOption = usersList.stream().filter(user -> 
-							user.getId() == id).findFirst();
-			
-				return userOption;
+		
+//			Optional<User> userOption = usersList.stream().filter(user -> 
+//							user.getId() == id).findFirst();
+//			
+//				return userOption;
+		
+			return userRepository.findById(id);
 			//You can re-factor this further and just put the return before the Optional...
 		
 	}
@@ -74,9 +77,9 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addUser(User user) {
 		//Need to make sure the ID is incrementing. 
-		//user.setId(COUNTER++);
+			//user.setId(COUNTER++);
 		//This will add a new User passed through the parameter into the Array List usersList
-		//usersList.add(user);
+			//usersList.add(user);
 		
 		//With UserRepository, we will no longer need counter, or to add user via Java syntax. Can be handled with JPA
 		userRepository.save(user); 
@@ -125,14 +128,21 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Optional<User> deleteUser(Long id){
 		//Need to verify first if User is in the ArrayList by checking its ID. The Stream and filter are looking for the user Id
-		Optional<User> userOption = usersList.stream().filter(user -> 
-								user.getId() == id).findFirst();
+		
+//		Optional<User> userOption = usersList.stream().filter(user -> 
+//								user.getId() == id).findFirst();
+		
+		//Now we are going to update our deleteUser with Entity and JPA syntax from Repository. 
+		Optional<User> userOption = userRepository.findById(id);
 		
 		if(userOption.isPresent()) {
 			//We are going to need another stream process and filter out the Ids. This will collect the statements as a List.
 			//With this, we are using a != to signify find all the users that AREN'T Being given the Id asked for. 
-			usersList = usersList.stream().filter(user -> 
-						userOption.get().getId() != user.getId()).collect(Collectors.toList());
+			
+//			usersList = usersList.stream().filter(user -> 
+//						userOption.get().getId() != user.getId()).collect(Collectors.toList());
+			
+			userRepository.delete(userOption.get());
 			
 			
 			return userOption;
