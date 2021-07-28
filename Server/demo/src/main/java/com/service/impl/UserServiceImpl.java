@@ -1,14 +1,17 @@
 package com.service.impl;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+
+//import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.model.User;
+import com.repository.UserRepository;
 import com.service.UserService;
 
 //This needs to implement the User Service
@@ -42,12 +45,18 @@ public class UserServiceImpl implements UserService{
 		user = new User(COUNTER++, "Kelly", "Rhodes", 30, "Russia");
 		usersList.add(user);
 	}
+	
+	//IMPORTANT: We are going to update our methods using the Repository set up and change how our model behaves with DB and JPA
+	@Autowired
+	private UserRepository userRepository;
 
 	
 	//This is the serviceImpl method that will find all Users. It was instantiated on the UserService interface.
 	@Override
 	public List<User> findAll() {
-		return usersList.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toList());
+		//Repository JPA has a findAll() method. However, we cannot convert
+		return userRepository.findAll();
+//		return usersList.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toList());
 	}
 	
 	//serviceImpl method that will be Users by Id. It was instantiated on the UserService interface.
@@ -65,9 +74,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addUser(User user) {
 		//Need to make sure the ID is incrementing. 
-		user.setId(COUNTER++);
+		//user.setId(COUNTER++);
 		//This will add a new User passed through the parameter into the Array List usersList
-		usersList.add(user);
+		//usersList.add(user);
+		
+		//With UserRepository, we will no longer need counter, or to add user via Java syntax. Can be handled with JPA
+		userRepository.save(user); 
 		
 	}
 	

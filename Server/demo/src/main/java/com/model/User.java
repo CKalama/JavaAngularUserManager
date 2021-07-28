@@ -18,8 +18,8 @@ import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.NotNull;
 
 //Part 2: Changing this model to an Entity so our database can read it
-
 @Entity
+//Creating a Table so that Spring JPA can create a table called users for our model within the H2 Database
 @Table(name="users")
 public class User {
 	
