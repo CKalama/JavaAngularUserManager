@@ -21,31 +21,7 @@ import com.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
-	
-	//An empty List of Users currently. Needs to be static because it will then be populated on initialiazation. 
-	public static List<User> usersList = new ArrayList<>();
-	
-	//We want to control the id to increment on each user.
-	//This is an Long, we can use it on a User in the static variables below because the first requirement is an id that is an Long
-	private static Long COUNTER = 1l;
-	
-	static {
-		User user = new User(COUNTER++, "Chris", "Kalama", 25, "USA");
-		usersList.add(user);
 		
-		user = new User(COUNTER++, "Sally", "Margie", 39, "Brazil");
-		usersList.add(user);
-		
-		user = new User(COUNTER++, "Jax", "Teller", 29, "USA");
-		usersList.add(user);
-		
-		user = new User(COUNTER++, "Becky", "Fuller", 22, "Canada");
-		usersList.add(user);
-		
-		user = new User(COUNTER++, "Kelly", "Rhodes", 30, "Russia");
-		usersList.add(user);
-	}
-	
 	//IMPORTANT: We are going to update our methods using the Repository set up and change how our model behaves with DB and JPA
 	@Autowired
 	private UserRepository userRepository;
@@ -91,8 +67,10 @@ public class UserServiceImpl implements UserService{
 	public Optional<User> updateUser(User user){
 		//This method as used in delete will check if the id we want to update is contained in the model.
 		//In this one however, u is the parameter being passed in the stream and then user is coming from parameter above that grabs the id from the Model
-		Optional<User> userOption = usersList.stream().filter(u ->
-					u.getId() == user.getId()).findFirst();
+//		Optional<User> userOption = usersList.stream().filter(u ->
+//					u.getId() == user.getId()).findFirst();
+		
+		Optional<User> userOption = userRepository.findById(user.getId());
 		
 		if(userOption.isPresent()) {
 			//This will make sure we grab the existing user
@@ -112,10 +90,11 @@ public class UserServiceImpl implements UserService{
 				existingUser.setCountry(user.getCountry());
 			}
 			
-			usersList = usersList.stream().filter(u -> 
-					u.getId() != existingUser.getId()).collect(Collectors.toList());
-			
-			usersList.add(existingUser);
+//			usersList = usersList.stream().filter(u -> 
+//					u.getId() != existingUser.getId()).collect(Collectors.toList());
+//			
+//			usersList.add(existingUser);
+			userRepository.save(existingUser);
 			
 			return Optional.of(existingUser);
 		}
@@ -153,3 +132,32 @@ public class UserServiceImpl implements UserService{
 	}
 	
 }
+
+
+
+//OLD Static variables For how we stored the Users...
+
+//An empty List of Users currently. Needs to be static because it will then be populated on initialiazation. 
+//public static List<User> usersList = new ArrayList<>();
+
+//We want to control the id to increment on each user.
+//This is an Long, we can use it on a User in the static variables below because the first requirement is an id that is an Long
+//private static Long COUNTER = 1l;
+
+//static {
+//	User user = new User(COUNTER++, "Chris", "Kalama", 25, "USA");
+//	usersList.add(user);
+//	
+//	user = new User(COUNTER++, "Sally", "Margie", 39, "Brazil");
+//	usersList.add(user);
+//	
+//	user = new User(COUNTER++, "Jax", "Teller", 29, "USA");
+//	usersList.add(user);
+//	
+//	user = new User(COUNTER++, "Becky", "Fuller", 22, "Canada");
+//	usersList.add(user);
+//	
+//	user = new User(COUNTER++, "Kelly", "Rhodes", 30, "Russia");
+//	usersList.add(user);
+//}
+
