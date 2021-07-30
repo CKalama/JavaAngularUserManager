@@ -1,5 +1,8 @@
 package com.component;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +23,23 @@ public class LoadUsersInDB implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		User user = new User("Chris", "Kalama", 25, "USA");
-		userRepository.save(user);
+		User user1 = new User("Chris", "Kalama", 25, "USA");
 		
-		user = new User( "Sally", "Margie", 39, "Brazil");
-		userRepository.save(user);
+		User user2 = new User( "Sally", "Margie", 39, "Brazil");
 		
-		user = new User("Jax", "Teller", 29, "USA");
-		userRepository.save(user);
+		User user3 = new User("Jax", "Teller", 29, "USA");
 		
-		user = new User("Becky", "Fuller", 22, "Canada");
-		userRepository.save(user);
+		User user4 = new User("Becky", "Fuller", 22, "Canada");
 		
-		user = new User("Kelly", "Rhodes", 30, "Russia");
-		userRepository.save(user);
+		User user5 = new User("Kelly", "Rhodes", 30, "Russia");
+		
+		User user6 = new User("Matt", "Holland", 45, "Mexico");
+		
+		User user7 = new User("Ryan", "Manny", 21, "USA");
 
+		List<User> usersList = Arrays.asList(user1, user2, user3, user4, user5, user6, user7);
+		
+		userRepository.saveAll(usersList);
 	}
 
 }
