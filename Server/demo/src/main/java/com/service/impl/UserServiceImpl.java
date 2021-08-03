@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.model.User;
@@ -29,6 +30,10 @@ public class UserServiceImpl implements UserService{
 	//IMPORTANT: We are going to update our methods using the Repository set up and change how our model behaves with DB and JPA
 	@Autowired
 	private UserRepository userRepository;
+	
+	//Injecting PasswordEncoder so we can encrypt our passwords for each newly created or updated user.
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	
 	//This is the serviceImpl method that will find all Users. It was instantiated on the UserService interface.
@@ -61,6 +66,7 @@ public class UserServiceImpl implements UserService{
 		//This will add a new User passed through the parameter into the Array List usersList
 			//usersList.add(user);
 		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		//With UserRepository, we will no longer need counter, or to add user via Java syntax. Can be handled with JPA
 		userRepository.save(user); 
 		
@@ -81,6 +87,12 @@ public class UserServiceImpl implements UserService{
 			User existingUser = userOption.get();
 			
 			//We need to check what is updated in the model
+			if(user.getUsername() != null) {
+				existingUser.setUsername(user.getUsername());
+			}
+			if(user.getPassword() != null) {
+				existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
 			if(user.getFirstName() != null) {
 				existingUser.setFirstName(user.getFirstName());
 			}
