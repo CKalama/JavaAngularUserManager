@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-//This is the model class, here is built a simple User who will get your instance variables, generic Constructor
+//This is the model class, it will eventually become the entity class. Here is built a simple User who will get your instance variables, generic Constructor
 // and getters/setters.
 
 //You will also need a Constructor with ALL instance variables
