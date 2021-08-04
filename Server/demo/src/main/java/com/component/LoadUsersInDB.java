@@ -29,6 +29,11 @@ public class LoadUsersInDB implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+		//We are getting an error where the mysql table is adding multiple duplicate records. This should alleviate. 
+		if(userRepository.count() > 0) {
+			return;
+		}
+		
 		User user1 = new User("chrisK", UUID.randomUUID().toString(),"Chris", "Kalama", 25, "USA");
 		
 		User user2 = new User("sallyM", UUID.randomUUID().toString(), "Sally", "Margie", 39, "Brazil");
