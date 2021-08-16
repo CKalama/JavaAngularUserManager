@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { BasicAuthInterceptor } from './interceptors/basic-auth-interceptor';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   constructor(private http:HttpClient) { }
 
-  authenticate(username, password): Observable<any>{
+  authenticate(username: | any, password: | any): Observable<any>{
     const body = new HttpParams()
       .set('username', username)
       .set('password', password)
