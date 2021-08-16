@@ -6,7 +6,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { BasicAuthInterceptor } from './interceptors/basic-auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     MDBBootstrapModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
